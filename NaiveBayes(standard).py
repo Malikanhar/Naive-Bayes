@@ -13,21 +13,12 @@ table_array = np.zeros((7,4,2))
 sum_data = np.zeros((2))
 for data in dataTrain:
     for j in range(1,len(data)-1):
-        if(data[j] == label[j-1][0]):
-            if(data[8] == label[7][0]):
-                table_array[j-1][0][0] += 1
-            else:
-                table_array[j-1][0][1] += 1
-        elif(data[j] == label[j-1][1]):
-            if(data[8] == label[7][0]):
-                table_array[j-1][1][0] += 1
-            else:
-                table_array[j-1][1][1] += 1
-        else:
-            if(data[8] == label[7][0]):
-                table_array[j-1][2][0] += 1
-            else:
-                table_array[j-1][2][1] += 1
+        for k in range(len(label[j-1])):
+            if(data[j] == label[j-1][k]):
+                if(data[8] == label[7][0]):
+                    table_array[j-1][k][0] += 1
+                else:
+                    table_array[j-1][k][1] += 1
         if(data[8] == label[7][0]):
             table_array[j-1][3][0] += 1
         else:
@@ -44,15 +35,10 @@ result = np.ones((len(dataTest), 2))
 idx = 0
 for data in dataTest:
     for j in range(1, len(data)):
-        if(data[j] == label[j-1][0]):
-            result[idx][0] *= table_array[j-1][0][0] / table_array[j-1][3][0]
-            result[idx][1] *= table_array[j-1][0][1] / table_array[j-1][3][1]
-        elif(data[j] == label[j-1][1]):
-            result[idx][0] *= table_array[j-1][1][0] / table_array[j-1][3][0]
-            result[idx][1] *= table_array[j-1][1][1] / table_array[j-1][3][1]
-        else:
-            result[idx][0] *= table_array[j-1][2][0] / table_array[j-1][3][0]
-            result[idx][1] *= table_array[j-1][2][1] / table_array[j-1][3][1]
+        for k in range(len(label[j-1])):
+            if(data[j] == label[j-1][k]):
+                result[idx][0] *= table_array[j-1][k][0] / table_array[j-1][3][0]
+                result[idx][1] *= table_array[j-1][k][1] / table_array[j-1][3][1]
     result[idx][0] *= sum_data[0] / sum(sum_data)
     result[idx][1] *= sum_data[0] / sum(sum_data)
     idx += 1
