@@ -40,7 +40,7 @@ for data in dataTest:
                 result[idx][0] *= table_array[j-1][k][0] / table_array[j-1][3][0]
                 result[idx][1] *= table_array[j-1][k][1] / table_array[j-1][3][1]
     result[idx][0] *= sum_data[0] / sum(sum_data)
-    result[idx][1] *= sum_data[0] / sum(sum_data)
+    result[idx][1] *= sum_data[1] / sum(sum_data)
     idx += 1
     
 result = np.argmax(result, axis = 1)
